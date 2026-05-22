@@ -41,8 +41,7 @@ def evaluate_password_strength() -> {int, str}:
         pool_size += 5
     if re.search(r'[ ]', password):
         pool_size += 1
-        
-    print(f"Pool size: {pool_size}")
+       
     # Formula: E = L * log2(R)
     entropy = password_length * math.log2(pool_size)
     
