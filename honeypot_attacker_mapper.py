@@ -43,7 +43,7 @@ def map_command(command: str):
 def load_log_file(path: str) -> dict:
     sessions = defaultdict(list)
     
-    with open(path, 'r', encoding='utf-16') as f:
+    with open(path, 'r', encoding='utf-8') as f:
         for line in f:
             if not line.strip():
                 continue
@@ -79,7 +79,7 @@ def analyze(sessions: dict):
                 
             for tid, name, tactic in map_command(cmd):
                 techniques.add(tid)
-                technique_meta[tid] = name 
+                technique_meta[tid] = (name, tactic)
                 technique_counts[tid] += 1
                 
         per_ip[ip] = sorted(techniques)
@@ -121,7 +121,7 @@ def main():
         
         print("=== Per-attacker ATT&CK profile ===")
         for ip, techniques in per_ip.items():
-            labeled = [f"{t} ({meta[t][1]})" for t in techniques]
+            labeled = [f"{t} ({meta[t][0]})" for t in techniques]
             print(f"{ip}: {', '.join(labeled) if labeled else 'no mapped techniques'}")
             
         print("\n=== Aggregate technique frequency ===")

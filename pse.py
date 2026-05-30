@@ -8,7 +8,7 @@ import re
 import hashlib
 import requests
 
-def evaluate_password_strength() -> {int, str}:
+def evaluate_password_strength() -> tuple[int, str]:
     score = 0
     password_length = 0
     
@@ -22,9 +22,9 @@ def evaluate_password_strength() -> {int, str}:
     # Score password length (16+ recommended, 8+ minimum, anything below is not secure)
     if password_length >= 16:
         score += 5
-    elif password_length > 8 and password_length < 16:
+    elif password_length >= 8 and password_length < 16:
         score += 3
-    elif password_length < 8:
+    else:
         score += 1
         
     # Score password by entropy. 
